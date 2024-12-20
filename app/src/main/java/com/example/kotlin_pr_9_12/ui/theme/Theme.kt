@@ -63,6 +63,7 @@ fun CustomTheme(
     )
 }
 
+// Компонент CustomTheme для применения кастомной темы в приложении
 @Composable
 fun Kotlin_pr_9_12Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -79,7 +80,7 @@ fun Kotlin_pr_9_12Theme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-
+    // Применение темы с использованием MaterialTheme
     MaterialTheme(
         //colorScheme = colorScheme,
         typography = Typography,

@@ -10,10 +10,10 @@ import androidx.compose.ui.unit.sp
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Normal, // Толщина шрифта
         fontSize = 16.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.5.sp
+        lineHeight = 10.sp, // Высота строки
+        letterSpacing = 0.5.sp // Интервал между символами
     )
     /* Other default text styles to override
     titleLarge = TextStyle(
@@ -36,7 +36,7 @@ val CustomTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Cursive,
         fontSize = 24.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.1.sp
+        lineHeight = 10.sp,
+        letterSpacing = 0.2.sp
     )
 )

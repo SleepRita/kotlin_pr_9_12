@@ -70,7 +70,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        enableEdgeToEdge()
         setContent {
             CustomTheme {
                 Greeting()
@@ -79,10 +78,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Greeting - это основной экран с навигацией и элементами UI
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting() {
+    // Создание контроллера для навигации
     val navController = rememberNavController()
+    // Scaffold - основной контейнер для UI
     Scaffold(Modifier.fillMaxSize()) { innerPadding ->
         NavHost(
             navController,
@@ -102,6 +104,7 @@ fun Greeting() {
     }
 }
 
+// AppBar - компонент для отображения панели приложения с заголовком
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(title: String) {
@@ -111,22 +114,23 @@ fun AppBar(title: String) {
                 text = title,
                 fontSize = 16.sp
             )},
-        Modifier.fillMaxHeight(0.1f)
+        Modifier.fillMaxHeight(0.08f)
     )
 }
 
-
+// Здесь описан стартовый экран
 @Composable
 fun PR9(name: String, surname: String, groupp: String, navController: NavHostController) {
     val animals: List<String> = mutableListOf(
         "Cat", "Dog", "Elephant", "Tiger", "Lion", "Giraffe", "Zebra", "Kangaroo", "Panda", "Rabbit", "Horse")
 
-    val someText = remember { mutableStateOf("This is a card!") }
+    // Создание состояния для Drawer (бокового меню)
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    // ModalNavigationDrawer - боковое меню, которое появляется при клике на кнопку
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerState, // Устанавливаем состояние меню
         drawerContent = {
             ModalDrawerSheet {
                 Column {
@@ -146,7 +150,7 @@ fun PR9(name: String, surname: String, groupp: String, navController: NavHostCon
                 }
             }
         },
-        gesturesEnabled = false
+        gesturesEnabled = true
     ) {
         Scaffold(
             topBar = {
@@ -206,7 +210,7 @@ fun PR9(name: String, surname: String, groupp: String, navController: NavHostCon
 
                     ) {
                         Text(
-                            text = someText.value,
+                            text = "This is a card!",
                             fontSize = 40.sp
                         )
                     }
@@ -229,16 +233,18 @@ fun PR9(name: String, surname: String, groupp: String, navController: NavHostCon
     }
 }
 
+// BgProcess - пример фонового процесса, который выполняется через WorkManager
 class BgProcess(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
         Log.d("rrr", "Some bg thing")
-        return Result.success()
+        return Result.success() // Возвращаем успешный результат работы
     }
 }
 
 // Практика 10
 @Composable
 fun ScreenWithCat(navController: NavController) {
+    // Создание ограничений для фонового процесса
     val constraints = androidx.work.Constraints.Builder().setRequiresBatteryNotLow(true).setRequiredNetworkType(NetworkType.CONNECTED).build()
     val workRequest = OneTimeWorkRequestBuilder<BgProcess>().setConstraints(constraints).build()
     Scaffold(Modifier.fillMaxSize()) { innerPadding ->
@@ -246,6 +252,7 @@ fun ScreenWithCat(navController: NavController) {
 
             val url = "https://funik.ru/wp-content/uploads/2018/10/17478da42271207e1d86.jpg"
 
+            //библиотека для загрузки изображений из Интернета — rememberImagePainter из coil
             val painter = rememberImagePainter(
                 ImageRequest.Builder(LocalContext.current)
                     .data(url)
@@ -265,7 +272,7 @@ fun ScreenWithCat(navController: NavController) {
             )
             Button(
                 onClick = { navController.navigate("home")
-                WorkManager.getInstance().enqueue(workRequest)})
+                WorkManager.getInstance().enqueue(workRequest)}) // Запуск фоновой задачи
             {
                 Text(text = "Back to home", textAlign = TextAlign.Center)
             }
@@ -274,6 +281,7 @@ fun ScreenWithCat(navController: NavController) {
     }
 }
 
+// Превью компонента Greeting с использованием кастомной темы
 @Preview(
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO
@@ -281,6 +289,6 @@ fun ScreenWithCat(navController: NavController) {
 @Composable
 fun GreetingPreview() {
     Kotlin_pr_9_12Theme {
-        Greeting()
+        Greeting() // Отображаем Greeting в превью
     }
 }
